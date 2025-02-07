@@ -134,11 +134,11 @@
                 const prize = getPrize(actualRotation);
                 spinCount++; // Increment spin count
                 showPopup(`
-                    Congratulations!!
-                    Your birthday #${spinCount} prize is ${prize}.
-                    Happy Birthday!!! 
-                    If you do not like it, try again!!
-                    Or send me a screenshot to receive your prize :)
+                    Congratulations!! <br>
+                    Your birthday #${spinCount} prize is ${prize}. <br>
+                    Happy Birthday!!! <br>
+                    If you do not like it, try again!! <br>
+                    Or send me a screenshot to receive your prize :) <br>
                 `);
                 isSpinning = false;
             }, 5000); // Match the transition duration
@@ -162,7 +162,8 @@
         }
 
         function showPopup(message) {
-            popupMessage.textContent = message;
+            const popupMessage = document.getElementById("popup-message");
+            popupMessage.innerHTML = message; // Use innerHTML to render <br> tags
             popup.style.display = 'block';
         }
 
