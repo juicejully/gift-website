@@ -272,6 +272,7 @@
             font-size: 18px;
             font-weight: bold;
         }
+
     </style>
 </head>
 
@@ -476,12 +477,19 @@
             checkSong();
         }
 
+        let failedAttempts = 0; // Track failed attempts
+
+        // Function to start the APT word rain effect
+        let rainInterval; // To control the rain animation
+
         function checkSong() {
             const guessInput = document.getElementById("guess-song");
             const submitButton = document.getElementById("submit-song");
             const messageBox = document.getElementById("msg-2");
 
-            const guess = guessInput.value.toLowerCase();
+            const guess = guessInput.value.trim().toLowerCase(); // Trim spaces
+
+            if (guess === "") return; // Prevent checking an empty input
 
             // Check if the guess contains the word 'apt' (case-insensitive)
             if (guess.includes('apt')) {
@@ -490,13 +498,28 @@
                 messageBox.innerHTML = "🎉 Correct! The song is 'APT' by Rosé and Bruno Mars!";
 
                 document.getElementById("next-level3-button").style.display = "inline-block";
+                failedAttempts = 0; // Reset the counter when correct
             } else {
-                messageBox.innerHTML = `
-                        <p>Incorrect! Try again.</p>`;
+                failedAttempts++; // Increment failed attempts
+                messageBox.innerHTML = `<p>Incorrect! Try again.</p>`;
+
+                // Start the rain effect after 3 failed attempts
+                if (failedAttempts >= 5) {
+                    APT();
+                    failedAttempts = 0; // Reset counter after effect
+                }
             }
 
-            // Optionally, clear the input after checking the guess
-            document.getElementById('guess-song').value = "";
+            // Clear input after checking the guess
+            guessInput.value = "";
+        }
+
+        function APT(){
+            const messageBox = document.getElementById("msg-2");
+            messageBox.innerHTML = `<p>Don't you want me <br>
+                Like I want you, baby <br>
+                Don't you need me <br>
+                Like I need you now</p>`;
         }
 
         function closePopup1() {
@@ -510,6 +533,7 @@
         }
 
         function middleLevel() {
+            stopWordRain(); // Stop the rain effect
             closePopup2();
             document.getElementById("level3").style.display = "block";
         }
